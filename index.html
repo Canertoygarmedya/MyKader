@@ -1,0 +1,976 @@
+<!DOCTYPE html>
+<html lang="tr" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Falomi — AI Kahve Falı, Tarot & Astroloji Uygulaması</title>
+  <meta name="description" content="Yapay zekâ destekli gerçekçi kahve falı, mistik tarot açılımları, doğum haritası ve günlük burç yorumları Falomi'de. Hemen Google Play'den ücretsiz indirin!" />
+  <meta name="keywords" content="kahve falı, tarot, astroloji, burç yorumları, doğum haritası, rüya tabiri, numeroloji, fal uygulaması, android fal, falomi" />
+  <meta name="theme-color" content="#070714" />
+
+  <!-- Open Graph / Meta -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Falomi — Geleceğinize Işık Tutan AI Fal & Astroloji" />
+  <meta property="og:description" content="Fincanınızdaki sembolleri yapay zekâ ile anında çözün, tarot kartlarının bilgeliğini keşfedin. Google Play'den ücretsiz indirin." />
+  <meta property="og:image" content="https://play-lh.googleusercontent.com" />
+
+  <!-- Fonts & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            serif: ['Cinzel', 'serif'],
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+          },
+          colors: {
+            night: '#070714',
+            nightcard: '#0F0E24',
+            gold: '#F3C969',
+            goldlight: '#FFE6A3',
+            golddark: '#C79A2B',
+            mystic: '#8A5CF6',
+            mysticdark: '#4C1D95',
+            nebula: '#1E1B4B',
+          },
+          animation: {
+            'float-slow': 'float 6s ease-in-out infinite',
+            'float-reverse': 'floatRev 7s ease-in-out infinite',
+            'pulse-glow': 'pulseGlow 3s ease-in-out infinite',
+            'spin-slow': 'spin 25s linear infinite',
+            'star-twinkle': 'twinkle 4s ease-in-out infinite alternate',
+          },
+          keyframes: {
+            float: {
+              '0%, 100%': { transform: 'translateY(0px)' },
+              '50%': { transform: 'translateY(-14px)' },
+            },
+            floatRev: {
+              '0%, 100%': { transform: 'translateY(0px)' },
+              '50%': { transform: 'translateY(14px)' },
+            },
+            pulseGlow: {
+              '0%, 100%': { opacity: '0.4', transform: 'scale(1)' },
+              '50%': { opacity: '0.8', transform: 'scale(1.08)' },
+            },
+            twinkle: {
+              '0%': { opacity: '0.2' },
+              '100%': { opacity: '0.6' },
+            }
+          }
+        }
+      }
+    };
+  </script>
+
+  <style>
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: #070714; }
+    ::-webkit-scrollbar-thumb { background: #232042; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: #4C1D95; }
+
+    /* Star Background */
+    .stars-bg {
+      background-image: 
+        radial-gradient(1.5px 1.5px at 15% 15%, #ffffff, transparent),
+        radial-gradient(2px 2px at 30% 70%, #FFE6A3, transparent),
+        radial-gradient(1px 1px at 45% 30%, #ffffff, transparent),
+        radial-gradient(1.5px 1.5px at 60% 85%, #8A5CF6, transparent),
+        radial-gradient(2px 2px at 75% 25%, #ffffff, transparent),
+        radial-gradient(1px 1px at 85% 65%, #FFE6A3, transparent),
+        radial-gradient(1.5px 1.5px at 95% 40%, #ffffff, transparent),
+        radial-gradient(1px 1px at 10% 90%, #8A5CF6, transparent);
+      background-size: 600px 600px;
+    }
+
+    /* Glass Effects */
+    .glass-box {
+      background: rgba(15, 14, 36, 0.7);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(243, 201, 105, 0.15);
+    }
+
+    .glass-box-hover {
+      transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .glass-box-hover:hover {
+      transform: translateY(-6px);
+      border-color: rgba(243, 201, 105, 0.4);
+      box-shadow: 0 20px 40px -15px rgba(138, 92, 246, 0.25), 0 0 25px -5px rgba(243, 201, 105, 0.15);
+    }
+
+    /* Gold Gradient Text & Buttons */
+    .text-gradient-gold {
+      background: linear-gradient(135deg, #FFE6A3 0%, #F3C969 50%, #C79A2B 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .text-gradient-mystic {
+      background: linear-gradient(135deg, #DDD6FE 0%, #A78BFA 50%, #8A5CF6 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .btn-gold {
+      background: linear-gradient(135deg, #FFE6A3 0%, #F3C969 50%, #D4A330 100%);
+      color: #0A0915;
+      font-weight: 700;
+      box-shadow: 0 10px 25px -5px rgba(243, 201, 105, 0.4), 0 0 15px 0 rgba(243, 201, 105, 0.2);
+      transition: all 0.3s ease;
+    }
+    .btn-gold:hover {
+      transform: translateY(-2px) scale(1.02);
+      box-shadow: 0 15px 35px -5px rgba(243, 201, 105, 0.6), 0 0 25px 2px rgba(243, 201, 105, 0.4);
+    }
+
+    .btn-playstore {
+      background: linear-gradient(135deg, #13112E 0%, #1E1B4B 100%);
+      border: 1.5px solid rgba(243, 201, 105, 0.35);
+      color: #FFFFFF;
+      transition: all 0.3s ease;
+    }
+    .btn-playstore:hover {
+      border-color: #F3C969;
+      box-shadow: 0 10px 30px -5px rgba(138, 92, 246, 0.4);
+      transform: translateY(-2px);
+    }
+
+    /* Interactive Tarot Card 3D Flip */
+    .tarot-scene { perspective: 1000px; }
+    .tarot-card {
+      transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      transform-style: preserve-3d;
+      cursor: pointer;
+    }
+    .tarot-card.is-flipped {
+      transform: rotateY(180deg);
+    }
+    .tarot-face {
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+    }
+    .tarot-back {
+      transform: rotateY(180deg);
+    }
+
+    /* Phone Mockup Frame */
+    .phone-mockup {
+      width: 310px;
+      height: 630px;
+      border-radius: 46px;
+      background: #0B0A1C;
+      box-shadow: 
+        0 0 0 3px rgba(243, 201, 105, 0.25),
+        0 25px 70px -15px rgba(0, 0, 0, 0.9),
+        0 0 60px 5px rgba(138, 92, 246, 0.2);
+    }
+    @media (min-width: 640px) {
+      .phone-mockup {
+        width: 330px;
+        height: 670px;
+      }
+    }
+  </style>
+</head>
+
+<body class="bg-night text-slate-100 font-sans antialiased selection:bg-mystic selection:text-white relative overflow-x-hidden">
+
+  <!-- BACKGROUND NEBULA GLOWS -->
+  <div class="fixed inset-0 pointer-events-none z-0 stars-bg animate-star-twinkle"></div>
+  <div class="fixed top-[-10%] left-[-10%] w-[600px] h-[600px] rounded-full bg-mysticdark/25 blur-[140px] pointer-events-none z-0"></div>
+  <div class="fixed top-[40%] right-[-10%] w-[550px] h-[550px] rounded-full bg-gold/10 blur-[150px] pointer-events-none z-0"></div>
+  <div class="fixed bottom-[-10%] left-[25%] w-[650px] h-[650px] rounded-full bg-nebula/40 blur-[160px] pointer-events-none z-0"></div>
+
+  <!-- ================= NAVBAR ================= -->
+  <header class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 glass-box border-b border-gold/15" id="navbar">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-20">
+        
+        <!-- Logo -->
+        <a href="#" class="flex items-center gap-3 group">
+          <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-mystic/40 to-night border border-gold/40 flex items-center justify-center shadow-lg shadow-mystic/20 group-hover:scale-105 transition-transform">
+            <svg class="w-6 h-6 text-gold" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2l2.4 6.9L22 9.2l-5.6 4.6L18 22l-6-4.3L6 22l1.6-8.2L2 9.2l7.6-.3z"/>
+            </svg>
+          </div>
+          <div class="flex flex-col">
+            <span class="font-serif font-bold text-2xl tracking-wider text-gradient-gold">FALOMİ</span>
+            <span class="text-[10px] tracking-[0.25em] text-white/50 uppercase font-medium">AI Fal & Astroloji</span>
+          </div>
+        </a>
+
+        <!-- Desktop Navigation Links -->
+        <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-slate-300">
+          <a href="#ozellikler" class="hover:text-gold transition-colors">Özellikler</a>
+          <a href="#nasil-calisir" class="hover:text-gold transition-colors">Nasıl Çalışır?</a>
+          <a href="#tarot-deneyimi" class="hover:text-gold transition-colors">Tarot Seç</a>
+          <a href="#yorumlar" class="hover:text-gold transition-colors">Yorumlar</a>
+          <a href="#sss" class="hover:text-gold transition-colors">S.S.S.</a>
+        </nav>
+
+        <!-- CTA Action -->
+        <div class="flex items-center gap-3">
+          <a href="https://play.google.com/store/apps/details?id=com.mykader.app" target="_blank" rel="noopener noreferrer"
+             class="btn-gold px-5 py-2.5 rounded-full flex items-center gap-2 text-xs sm:text-sm font-bold tracking-wide">
+            <!-- Google Play SVG Icon -->
+            <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24">
+              <path d="M3.609 1.814L13.792 12 3.61 22.186c-.372-.347-.61-.849-.61-1.428V3.242c0-.579.238-1.081.61-1.428zm11.306 11.31l2.41 2.41-11.9 6.873 9.49-9.283zm0-2.248L5.425 1.593l11.9 6.873-2.41 2.41zm1.531 1.124l3.766-2.176c.725-.42.725-1.107 0-1.527l-3.766-2.176-2.115 2.115 2.115 2.115z" />
+            </svg>
+            <span>Google Play'den İndir</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ================= HERO SECTION ================= -->
+  <section class="relative pt-32 pb-20 lg:pt-44 lg:pb-32 overflow-hidden">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
+        
+        <!-- Left Hero Content -->
+        <div class="lg:col-span-7 text-center lg:text-left">
+          
+          <!-- Badge -->
+          <div class="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-mystic/15 border border-mystic/30 mb-6 backdrop-blur-md">
+            <span class="w-2 h-2 rounded-full bg-gold animate-ping"></span>
+            <span class="text-xs sm:text-sm font-medium text-goldlight tracking-wide">✦ Türkiye'nin En Gelişmiş AI Fal Uygulaması</span>
+          </div>
+
+          <!-- Main Title -->
+          <h1 class="text-4xl sm:text-5xl lg:text-6xl font-serif font-black tracking-tight leading-[1.15] mb-6">
+            Fincanındaki Sırları & <br class="hidden sm:inline" />
+            <span class="text-gradient-gold">Yıldızların Rehberliğini</span> <br />
+            Anında Keşfet
+          </h1>
+
+          <!-- Description -->
+          <p class="text-base sm:text-lg text-slate-300 max-w-2xl mx-auto lg:mx-0 mb-8 leading-relaxed">
+            Kahve fincanının fotoğrafını çek, yapay zekâmız saniyeler içinde telvelerdeki işaretleri çözsün. 
+            Tarot kartları, astroloji haritası, rüya tabirleri ve burç uyumu tek bir uygulamada cebinizde!
+          </p>
+
+          <!-- Action Buttons Area -->
+          <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 mb-10">
+            <!-- Google Play Main Download CTA -->
+            <a href="https://play.google.com/store/apps/details?id=com.mykader.app" target="_blank" rel="noopener noreferrer"
+               class="btn-gold w-full sm:w-auto px-8 py-4 rounded-2xl flex items-center justify-center gap-3.5 group shadow-2xl">
+              <!-- Play Store Colored / Monocrome SVG -->
+              <svg class="w-7 h-7 text-night fill-current group-hover:scale-110 transition-transform" viewBox="0 0 24 24">
+                <path d="M3.609 1.814L13.792 12 3.61 22.186c-.372-.347-.61-.849-.61-1.428V3.242c0-.579.238-1.081.61-1.428zm11.306 11.31l2.41 2.41-11.9 6.873 9.49-9.283zm0-2.248L5.425 1.593l11.9 6.873-2.41 2.41zm1.531 1.124l3.766-2.176c.725-.42.725-1.107 0-1.527l-3.766-2.176-2.115 2.115 2.115 2.115z" />
+              </svg>
+              <div class="text-left">
+                <div class="text-[10px] uppercase font-bold tracking-widest leading-none text-night/80">Hemen Ücretsiz Al</div>
+                <div class="text-lg font-black tracking-tight leading-tight">Google Play ile İndir</div>
+              </div>
+            </a>
+
+            <!-- QR Code Quick Scan / Feature Button -->
+            <div class="hidden sm:flex items-center gap-3 px-4 py-3 rounded-2xl glass-box border border-gold/20">
+              <div class="w-12 h-12 bg-white p-1 rounded-lg flex items-center justify-center shadow">
+                <!-- QR Code SVG Representation -->
+                <svg class="w-full h-full text-night" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M3 3h8v8H3V3zm2 2v4h4V5H5zm8-2h8v8h-8V3zm2 2v4h4V5h-4zM3 13h8v8H3v-8zm2 2v4h4v-4H5zm13-2h3v2h-3v-2zm-5 0h2v3h-2v-3zm2 3h3v2h-3v-2zm3 2h3v4h-3v-4zm-5 2h2v2h-2v-2zm2-2h1v2h-1v-2zm3-5h2v2h-2v-2zM7 7h0v0z"/>
+                </svg>
+              </div>
+              <div class="text-left">
+                <div class="text-xs font-semibold text-gold">QR ile Tara</div>
+                <div class="text-[11px] text-slate-400">Telefona anında yükle</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Social Proof / Ratings -->
+          <div class="flex flex-wrap items-center justify-center lg:justify-start gap-6 pt-2 border-t border-white/10">
+            <div class="flex items-center gap-2">
+              <div class="flex text-gold text-base">★★★★★</div>
+              <span class="font-bold text-sm">4.9 / 5.0</span>
+              <span class="text-xs text-slate-400">(Google Play)</span>
+            </div>
+            <div class="h-4 w-px bg-white/20 hidden sm:block"></div>
+            <div class="flex items-center gap-2 text-xs text-slate-300">
+              <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+              <span>100.000+ Mutlu Kullanıcı</span>
+            </div>
+            <div class="h-4 w-px bg-white/20 hidden sm:block"></div>
+            <div class="flex items-center gap-2 text-xs text-slate-300">
+              <span class="text-gold">⚡</span>
+              <span>30 Saniyede Yorum Hazır</span>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Right Hero Mockup -->
+        <div class="lg:col-span-5 flex justify-center relative">
+          
+          <!-- Floating Badge 1: Kahve Falı -->
+          <div class="absolute -top-4 -left-4 sm:left-4 z-20 glass-box px-4 py-2.5 rounded-2xl flex items-center gap-3 animate-float-slow shadow-xl border border-gold/30">
+            <div class="w-9 h-9 rounded-xl bg-amber-900/60 border border-amber-600/40 flex items-center justify-center text-lg">☕</div>
+            <div>
+              <div class="text-xs font-bold text-gold">AI Fincan Okuyucu</div>
+              <div class="text-[10px] text-slate-300">Semboller başarıyla çözüldü</div>
+            </div>
+          </div>
+
+          <!-- Floating Badge 2: Tarot -->
+          <div class="absolute -bottom-4 -right-4 sm:right-4 z-20 glass-box px-4 py-2.5 rounded-2xl flex items-center gap-3 animate-float-reverse shadow-xl border border-mystic/40">
+            <div class="w-9 h-9 rounded-xl bg-mysticdark/60 border border-mystic/40 flex items-center justify-center text-lg">🔮</div>
+            <div>
+              <div class="text-xs font-bold text-purple-300">Aşk & Kader Açılımı</div>
+              <div class="text-[10px] text-slate-300">Kader Çarkı & Aşıklar</div>
+            </div>
+          </div>
+
+          <!-- Glowing Phone Frame Mockup -->
+          <div class="phone-mockup relative p-3 flex flex-col justify-between overflow-hidden">
+            <!-- Screen Content Inside Mockup -->
+            <div class="w-full h-full rounded-[38px] bg-gradient-to-b from-[#12102B] via-[#0C0B1E] to-[#080716] overflow-y-auto relative p-4 flex flex-col text-slate-200 border border-white/5">
+              
+              <!-- App Top Bar -->
+              <div class="flex items-center justify-between pt-2 pb-4 border-b border-white/10">
+                <div class="flex items-center gap-2">
+                  <div class="w-7 h-7 rounded-lg bg-gold/20 border border-gold/40 flex items-center justify-center text-gold text-xs font-bold font-serif">F</div>
+                  <span class="font-serif font-bold text-sm tracking-wider text-gold">FALOMİ</span>
+                </div>
+                <div class="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-gold/15 border border-gold/30 text-gold text-[10px] font-bold">
+                  <span>✨ 3 Kredi</span>
+                </div>
+              </div>
+
+              <!-- Greeting -->
+              <div class="mt-4 mb-4">
+                <div class="text-[11px] text-slate-400">Hoş Geldin,</div>
+                <div class="font-serif text-lg font-bold text-white">Kaderinin Rehberi Hazır ✦</div>
+              </div>
+
+              <!-- Card 1: Kahve Falı -->
+              <div class="p-3.5 rounded-2xl bg-gradient-to-r from-amber-950/40 to-nightcard border border-amber-500/20 mb-3 relative overflow-hidden group">
+                <div class="flex items-center justify-between">
+                  <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-amber-900/60 border border-amber-600/30 flex items-center justify-center text-xl">☕</div>
+                    <div>
+                      <div class="font-bold text-xs text-amber-200">Kahve Falı Baktır</div>
+                      <div class="text-[10px] text-slate-400">Fotoğraf yükle, AI incelesin</div>
+                    </div>
+                  </div>
+                  <span class="text-xs text-gold">➔</span>
+                </div>
+              </div>
+
+              <!-- Card 2: Tarot -->
+              <div class="p-3.5 rounded-2xl bg-gradient-to-r from-purple-950/40 to-nightcard border border-mystic/30 mb-3 relative overflow-hidden">
+                <div class="flex items-center justify-between">
+                  <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-purple-900/60 border border-purple-500/30 flex items-center justify-center text-xl">🔮</div>
+                    <div>
+                      <div class="font-bold text-xs text-purple-200">3 Kart Tarot Açılımı</div>
+                      <div class="text-[10px] text-slate-400">Geçmiş, Şimdi ve Gelecek</div>
+                    </div>
+                  </div>
+                  <span class="text-xs text-mystic">➔</span>
+                </div>
+              </div>
+
+              <!-- Card 3: Günlük Burç & Astroloji -->
+              <div class="p-3.5 rounded-2xl bg-gradient-to-r from-blue-950/40 to-nightcard border border-blue-500/20 mb-3 relative overflow-hidden">
+                <div class="flex items-center justify-between">
+                  <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-blue-900/60 border border-blue-500/30 flex items-center justify-center text-xl">♈</div>
+                    <div>
+                      <div class="font-bold text-xs text-blue-200">Günün Astroloji Enerjisi</div>
+                      <div class="text-[10px] text-slate-400">Aşk %94 • Şans %88</div>
+                    </div>
+                  </div>
+                  <span class="text-xs text-blue-300">➔</span>
+                </div>
+              </div>
+
+              <!-- App Download Direct Overlay inside screen -->
+              <div class="mt-auto pt-3">
+                <a href="https://play.google.com/store/apps/details?id=com.mykader.app" target="_blank" rel="noopener noreferrer"
+                   class="block w-full py-2.5 rounded-xl bg-gradient-to-r from-goldlight via-gold to-golddark text-night text-center text-xs font-bold tracking-wide shadow-lg">
+                  📲 Google Play'den Aç
+                </a>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= TRUST STATS BAR ================= -->
+  <section class="py-10 border-y border-gold/15 bg-nightcard/60 backdrop-blur-md relative z-10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+        <div>
+          <div class="text-3xl sm:text-4xl font-serif font-black text-gradient-gold">500.000+</div>
+          <div class="text-xs sm:text-sm text-slate-400 mt-1 font-medium">Yorumlanan Fal & Kehanet</div>
+        </div>
+        <div>
+          <div class="text-3xl sm:text-4xl font-serif font-black text-gradient-gold">4.9 ★</div>
+          <div class="text-xs sm:text-sm text-slate-400 mt-1 font-medium">Google Play Puanı</div>
+        </div>
+        <div>
+          <div class="text-3xl sm:text-4xl font-serif font-black text-gradient-gold">%98.4</div>
+          <div class="text-xs sm:text-sm text-slate-400 mt-1 font-medium">Kullanıcı Memnuniyeti</div>
+        </div>
+        <div>
+          <div class="text-3xl sm:text-4xl font-serif font-black text-gradient-gold">7 / 24</div>
+          <div class="text-xs sm:text-sm text-slate-400 mt-1 font-medium">Anında & Kesintisiz AI Yanıt</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= FEATURES SECTION ================= -->
+  <section id="ozellikler" class="py-24 relative z-10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <!-- Section Header -->
+      <div class="text-center max-w-3xl mx-auto mb-16">
+        <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-gold/10 border border-gold/30 text-gold text-xs font-bold uppercase tracking-wider mb-3">
+          ✦ Mistisizm ve İleri Teknoloji
+        </div>
+        <h2 class="text-3xl sm:text-5xl font-serif font-bold tracking-tight mb-4">
+          Falomi ile <span class="text-gradient-gold">Neler Keşfedebilirsin?</span>
+        </h2>
+        <p class="text-slate-300 text-sm sm:text-base leading-relaxed">
+          Geleneksel kadim kehanet yöntemleri, en son yapay zekâ görüntü işleme ve doğal dil modelleriyle yeniden hayat buldu.
+        </p>
+      </div>
+
+      <!-- Feature Cards Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        
+        <!-- Feature 1 -->
+        <div class="glass-box glass-box-hover p-8 rounded-3xl relative overflow-hidden">
+          <div class="w-14 h-14 rounded-2xl bg-amber-950/60 border border-amber-500/30 flex items-center justify-center text-3xl mb-6 shadow-lg shadow-amber-900/30">
+            ☕
+          </div>
+          <h3 class="text-xl font-serif font-bold text-white mb-3">AI Destekli Kahve Falı</h3>
+          <p class="text-sm text-slate-300 leading-relaxed mb-6">
+            Fincan ve tabak fotoğraflarınızı yükleyin. Görsel yapay zeka algoritması telvedeki hayvan, nesne ve harf sembollerini anında tanır, aşk ve iş hayatınız için derinlemesine yorumlar.
+          </p>
+          <div class="flex items-center gap-2 text-xs font-bold text-gold">
+            <span>✓ Fotoğraftan Anında Tanıma</span>
+          </div>
+        </div>
+
+        <!-- Feature 2 -->
+        <div class="glass-box glass-box-hover p-8 rounded-3xl relative overflow-hidden">
+          <div class="w-14 h-14 rounded-2xl bg-purple-950/60 border border-purple-500/30 flex items-center justify-center text-3xl mb-6 shadow-lg shadow-purple-900/30">
+            🔮
+          </div>
+          <h3 class="text-xl font-serif font-bold text-white mb-3">Mistik Tarot Açılımları</h3>
+          <p class="text-sm text-slate-300 leading-relaxed mb-6">
+            78 kartlık kadim Tarot destesi arasından odaklanarak kartlarını seç. Günlük Tek Kart, 3 Kart (Geçmiş-Şimdi-Gelecek), Aşk Açılımı ve Kelt Haçı ile sorularına net cevaplar al.
+          </p>
+          <div class="flex items-center gap-2 text-xs font-bold text-purple-300">
+            <span>✓ Detaylı Kart Kombinasyonları</span>
+          </div>
+        </div>
+
+        <!-- Feature 3 -->
+        <div class="glass-box glass-box-hover p-8 rounded-3xl relative overflow-hidden">
+          <div class="w-14 h-14 rounded-2xl bg-blue-950/60 border border-blue-500/30 flex items-center justify-center text-3xl mb-6 shadow-lg shadow-blue-900/30">
+            ♈
+          </div>
+          <h3 class="text-xl font-serif font-bold text-white mb-3">Doğum Haritası & Astroloji</h3>
+          <p class="text-sm text-slate-300 leading-relaxed mb-6">
+            Doğum tarihiniz, saatiniz ve konumunuza göre yükselen burcunuzu, ay burcunuzu, ev yerleşimlerinizi ve gezegen transitlerinin hayatınıza etkilerini öğrenin.
+          </p>
+          <div class="flex items-center gap-2 text-xs font-bold text-blue-300">
+            <span>✓ Gerçek Zamanlı Gezegen Konumları</span>
+          </div>
+        </div>
+
+        <!-- Feature 4 -->
+        <div class="glass-box glass-box-hover p-8 rounded-3xl relative overflow-hidden">
+          <div class="w-14 h-14 rounded-2xl bg-indigo-950/60 border border-indigo-500/30 flex items-center justify-center text-3xl mb-6 shadow-lg shadow-indigo-900/30">
+            🌙
+          </div>
+          <h3 class="text-xl font-serif font-bold text-white mb-3">Bilinçaltı Rüya Tabirleri</h3>
+          <p class="text-sm text-slate-300 leading-relaxed mb-6">
+            Gördüğünüz rüyayı kelimelerle anlatın. Yapay zekâ, rüyanızdaki arketipik sembolleri, psikolojik mesajları ve geleceğe yönelik işaretleri çözümler.
+          </p>
+          <div class="flex items-center gap-2 text-xs font-bold text-indigo-300">
+            <span>✓ Sembolik & Psikolojik Analiz</span>
+          </div>
+        </div>
+
+        <!-- Feature 5 -->
+        <div class="glass-box glass-box-hover p-8 rounded-3xl relative overflow-hidden">
+          <div class="w-14 h-14 rounded-2xl bg-emerald-950/60 border border-emerald-500/30 flex items-center justify-center text-3xl mb-6 shadow-lg shadow-emerald-900/30">
+            🔢
+          </div>
+          <h3 class="text-xl font-serif font-bold text-white mb-3">Numeroloji & Kader Sayısı</h3>
+          <p class="text-sm text-slate-300 leading-relaxed mb-6">
+            İsminizdeki harflerin titreşimi ve doğum tarihinizin matematiği ile Yaşam Yolu, Ruh Güdüsü ve Kader sayınızın sakladığı sırları öğrenin.
+          </p>
+          <div class="flex items-center gap-2 text-xs font-bold text-emerald-300">
+            <span>✓ Pisagor & Kadim Numeroloji</span>
+          </div>
+        </div>
+
+        <!-- Feature 6 -->
+        <div class="glass-box glass-box-hover p-8 rounded-3xl relative overflow-hidden">
+          <div class="w-14 h-14 rounded-2xl bg-rose-950/60 border border-rose-500/30 flex items-center justify-center text-3xl mb-6 shadow-lg shadow-rose-900/30">
+            💞
+          </div>
+          <h3 class="text-xl font-serif font-bold text-white mb-3">Aşk & Burç Uyumu Analizi</h3>
+          <p class="text-sm text-slate-300 leading-relaxed mb-6">
+            Partnerinizle aranızdaki astrolojik uyumu, element dengesini ve iletişim gücünü detaylı yüzdelerle öğrenin, ilişkinizi güçlendirecek tüyolar alın.
+          </p>
+          <div class="flex items-center gap-2 text-xs font-bold text-rose-300">
+            <span>✓ Sinastri & Element Uyumu</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Feature Download Promo -->
+      <div class="mt-14 text-center">
+        <a href="https://play.google.com/store/apps/details?id=com.mykader.app" target="_blank" rel="noopener noreferrer"
+           class="inline-flex items-center gap-3 btn-gold px-8 py-4 rounded-full font-bold text-sm tracking-wide">
+          <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
+            <path d="M3.609 1.814L13.792 12 3.61 22.186c-.372-.347-.61-.849-.61-1.428V3.242c0-.579.238-1.081.61-1.428zm11.306 11.31l2.41 2.41-11.9 6.873 9.49-9.283zm0-2.248L5.425 1.593l11.9 6.873-2.41 2.41zm1.531 1.124l3.766-2.176c.725-.42.725-1.107 0-1.527l-3.766-2.176-2.115 2.115 2.115 2.115z" />
+          </svg>
+          <span>Tüm Özellikleri Google Play'den Ücretsiz Dene</span>
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= HOW IT WORKS ================= -->
+  <section id="nasil-calisir" class="py-24 bg-nightcard/40 border-y border-gold/10 relative z-10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center max-w-2xl mx-auto mb-16">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-mystic/15 border border-mystic/30 text-purple-300 text-xs font-bold uppercase tracking-wider mb-3">
+          ✦ 3 Kolay Adım
+        </div>
+        <h2 class="text-3xl sm:text-4xl font-serif font-bold text-white mb-3">
+          Nasıl <span class="text-gradient-gold">Çalışır?</span>
+        </h2>
+        <p class="text-slate-300 text-sm sm:text-base">
+          Falınıza ulaşmak hiç bu kadar zahmetsiz ve büyüleyici olmamıştı.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 relative">
+        
+        <!-- Step 1 -->
+        <div class="glass-box p-8 rounded-3xl relative text-center flex flex-col items-center">
+          <div class="w-16 h-16 rounded-full bg-gold/15 border-2 border-gold flex items-center justify-center font-serif text-2xl font-black text-gold mb-6 shadow-lg shadow-gold/20">
+            1
+          </div>
+          <h3 class="text-lg font-serif font-bold text-white mb-2">Google Play'den İndir</h3>
+          <p class="text-sm text-slate-300 leading-relaxed">
+            Falomi uygulamasını Android cihazınıza saniyeler içinde tamamen ücretsiz olarak yükleyin.
+          </p>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="glass-box p-8 rounded-3xl relative text-center flex flex-col items-center">
+          <div class="w-16 h-16 rounded-full bg-mystic/20 border-2 border-mystic flex items-center justify-center font-serif text-2xl font-black text-purple-300 mb-6 shadow-lg shadow-mystic/20">
+            2
+          </div>
+          <h3 class="text-lg font-serif font-bold text-white mb-2">Fincanını Çek veya Kart Seç</h3>
+          <p class="text-sm text-slate-300 leading-relaxed">
+            İster içtiğin kahvenin fincan fotoğraflarını yükle, ister aklındaki soruya odaklanarak Tarot kartlarını çek.
+          </p>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="glass-box p-8 rounded-3xl relative text-center flex flex-col items-center">
+          <div class="w-16 h-16 rounded-full bg-emerald-500/20 border-2 border-emerald-400 flex items-center justify-center font-serif text-2xl font-black text-emerald-300 mb-6 shadow-lg shadow-emerald-400/20">
+            3
+          </div>
+          <h3 class="text-lg font-serif font-bold text-white mb-2">Kişiye Özel Yorumunu Oku</h3>
+          <p class="text-sm text-slate-300 leading-relaxed">
+            Yapay zekâ destekli mistik motor, isminiz ve burcunuza özel detaylı analizini anında sunsun.
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= INTERACTIVE TAROT MINI-EXPERIENCE ================= -->
+  <section id="tarot-deneyimi" class="py-24 relative z-10 overflow-hidden">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      
+      <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-gold/10 border border-gold/30 text-gold text-xs font-bold uppercase tracking-wider mb-3">
+        ✦ Canlı İnteraktif Deneyim
+      </div>
+      <h2 class="text-3xl sm:text-4xl font-serif font-bold text-white mb-4">
+        Günün <span class="text-gradient-gold">Tarot Kartını Çek</span>
+      </h2>
+      <p class="text-slate-300 text-sm sm:text-base max-w-xl mx-auto mb-10">
+        Bir dilek tut, kalbini dinle ve aşağıdaki kartlardan birine tıkla. Günün sana mesajını keşfet!
+      </p>
+
+      <!-- 3 Tarot Cards to Flip -->
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-3xl mx-auto mb-10">
+        
+        <!-- Card 1 -->
+        <div class="tarot-scene h-72 sm:h-80" onclick="flipTarot(this, 'Kader Çarkı', 'Şans ve dönüm noktaları kapında! Bugün hayatında beklemediğin olumlu bir değişim gerçekleşebilir.', '🔮')">
+          <div class="tarot-card w-full h-full relative rounded-2xl">
+            <!-- Front (Unflipped Back of Card) -->
+            <div class="tarot-face absolute inset-0 rounded-2xl glass-box border-2 border-gold/30 flex flex-col items-center justify-center p-4 group hover:border-gold transition-colors">
+              <div class="w-12 h-12 rounded-full border border-gold/40 flex items-center justify-center text-gold mb-3 text-xl">✦</div>
+              <div class="font-serif font-bold text-sm text-gold">1. Kartı Seç</div>
+              <div class="text-[11px] text-slate-400 mt-2">Kartı çevirmek için tıkla</div>
+            </div>
+            <!-- Back (Revealed Tarot) -->
+            <div class="tarot-face tarot-back absolute inset-0 rounded-2xl bg-gradient-to-b from-[#1C1842] to-[#0D0B20] border-2 border-gold p-4 flex flex-col items-center justify-between text-center shadow-2xl">
+              <div class="text-2xl">🎡</div>
+              <div>
+                <div class="font-serif font-bold text-sm text-gold">Kader Çarkı</div>
+                <div class="text-[11px] text-slate-300 mt-1">Döngü & Büyük Fırsat</div>
+              </div>
+              <div class="text-[10px] text-purple-300 font-semibold">Tıklandı ✓</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="tarot-scene h-72 sm:h-80" onclick="flipTarot(this, 'Yıldız', 'Umutların yeşeriyor. İçindeki yaratıcı güç ve ilham en yüksek seviyede. Kendine güven.', '⭐')">
+          <div class="tarot-card w-full h-full relative rounded-2xl">
+            <!-- Front -->
+            <div class="tarot-face absolute inset-0 rounded-2xl glass-box border-2 border-gold/30 flex flex-col items-center justify-center p-4 group hover:border-gold transition-colors">
+              <div class="w-12 h-12 rounded-full border border-gold/40 flex items-center justify-center text-gold mb-3 text-xl">✦</div>
+              <div class="font-serif font-bold text-sm text-gold">2. Kartı Seç</div>
+              <div class="text-[11px] text-slate-400 mt-2">Kartı çevirmek için tıkla</div>
+            </div>
+            <!-- Back -->
+            <div class="tarot-face tarot-back absolute inset-0 rounded-2xl bg-gradient-to-b from-[#1C1842] to-[#0D0B20] border-2 border-gold p-4 flex flex-col items-center justify-between text-center shadow-2xl">
+              <div class="text-2xl">⭐</div>
+              <div>
+                <div class="font-serif font-bold text-sm text-gold">Yıldız Kartı</div>
+                <div class="text-[11px] text-slate-300 mt-1">Umut, Şifa & Huzur</div>
+              </div>
+              <div class="text-[10px] text-purple-300 font-semibold">Tıklandı ✓</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="tarot-scene h-72 sm:h-80" onclick="flipTarot(this, 'Güneş', 'Aydınlık günler, başarı ve neşe seninle. Aşkta ve kariyerde parlama zamanı!', '☀️')">
+          <div class="tarot-card w-full h-full relative rounded-2xl">
+            <!-- Front -->
+            <div class="tarot-face absolute inset-0 rounded-2xl glass-box border-2 border-gold/30 flex flex-col items-center justify-center p-4 group hover:border-gold transition-colors">
+              <div class="w-12 h-12 rounded-full border border-gold/40 flex items-center justify-center text-gold mb-3 text-xl">✦</div>
+              <div class="font-serif font-bold text-sm text-gold">3. Kartı Seç</div>
+              <div class="text-[11px] text-slate-400 mt-2">Kartı çevirmek için tıkla</div>
+            </div>
+            <!-- Back -->
+            <div class="tarot-face tarot-back absolute inset-0 rounded-2xl bg-gradient-to-b from-[#1C1842] to-[#0D0B20] border-2 border-gold p-4 flex flex-col items-center justify-between text-center shadow-2xl">
+              <div class="text-2xl">☀️</div>
+              <div>
+                <div class="font-serif font-bold text-sm text-gold">Güneş Kartı</div>
+                <div class="text-[11px] text-slate-300 mt-1">Mutluluk & Zafer</div>
+              </div>
+              <div class="text-[10px] text-purple-300 font-semibold">Tıklandı ✓</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Result Modal Area -->
+      <div id="tarot-result" class="hidden glass-box p-6 rounded-3xl max-w-xl mx-auto border-2 border-gold/40 animate-fade text-center mb-8">
+        <div id="tarot-icon" class="text-4xl mb-2">🔮</div>
+        <h4 id="tarot-title" class="font-serif text-xl font-bold text-gold mb-2">Kader Çarkı</h4>
+        <p id="tarot-desc" class="text-sm text-slate-200 mb-5 leading-relaxed">Yorum yükleniyor...</p>
+        
+        <div class="pt-4 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <span class="text-xs text-slate-400">Daha derin aşk, iş ve gelecek açılımı için:</span>
+          <a href="https://play.google.com/store/apps/details?id=com.mykader.app" target="_blank" rel="noopener noreferrer"
+             class="btn-gold px-5 py-2.5 rounded-full text-xs font-bold tracking-wide flex items-center gap-2">
+            <span>Uygulamayı İndir</span> ➔
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= USER REVIEWS SECTION ================= -->
+  <section id="yorumlar" class="py-24 bg-nightcard/30 border-t border-gold/10 relative z-10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center max-w-2xl mx-auto mb-16">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-gold/10 border border-gold/30 text-gold text-xs font-bold uppercase tracking-wider mb-3">
+          ✦ Kullanıcı Deneyimleri
+        </div>
+        <h2 class="text-3xl sm:text-4xl font-serif font-bold text-white mb-3">
+          Kullanıcılarımız <span class="text-gradient-gold">Ne Diyor?</span>
+        </h2>
+        <p class="text-slate-300 text-sm sm:text-base">
+          Google Play Store'da bizi tercih eden binlerce kullanıcının gerçek geri bildirimleri.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        
+        <!-- Review 1 -->
+        <div class="glass-box p-6 rounded-3xl flex flex-col justify-between">
+          <div>
+            <div class="flex text-gold text-sm mb-3">★★★★★</div>
+            <p class="text-sm text-slate-200 italic leading-relaxed mb-4">
+              "Kahve fincanımı bu kadar detaylı ve isabetli anlatan başka bir yapay zeka görmedim. Telvedeki harfleri ve sembolleri tek tek çıkardı. Kesinlikle vazgeçilmezim oldu!"
+            </p>
+          </div>
+          <div class="flex items-center gap-3 pt-4 border-t border-white/10">
+            <div class="w-10 h-10 rounded-full bg-gradient-to-br from-purple-500 to-indigo-600 flex items-center justify-center font-bold text-white text-xs">
+              EK
+            </div>
+            <div>
+              <div class="text-xs font-bold text-white">Ece K.</div>
+              <div class="text-[11px] text-slate-400">Doğrulanmış Kullanıcı • Google Play</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Review 2 -->
+        <div class="glass-box p-6 rounded-3xl flex flex-col justify-between border-gold/30">
+          <div>
+            <div class="flex text-gold text-sm mb-3">★★★★★</div>
+            <p class="text-sm text-slate-200 italic leading-relaxed mb-4">
+              "Tarot kartlarının yorumları inanılmaz derin. Özellikle aşk açılımında aklımdaki soru işaretlerine öyle bir rehberlik etti ki hayretler içinde kaldım. Arayüzü de harika."
+            </p>
+          </div>
+          <div class="flex items-center gap-3 pt-4 border-t border-white/10">
+            <div class="w-10 h-10 rounded-full bg-gradient-to-br from-golddark to-amber-600 flex items-center justify-center font-bold text-white text-xs">
+              BA
+            </div>
+            <div>
+              <div class="text-xs font-bold text-white">Burak A.</div>
+              <div class="text-[11px] text-slate-400">Doğrulanmış Kullanıcı • Google Play</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Review 3 -->
+        <div class="glass-box p-6 rounded-3xl flex flex-col justify-between">
+          <div>
+            <div class="flex text-gold text-sm mb-3">★★★★★</div>
+            <p class="text-sm text-slate-200 italic leading-relaxed mb-4">
+              "Doğum haritası ve yükselen burç analizleri tam bir profesyonel astrolog kalitesinde. Günlük burç bildirimleriyle güne başlamak harika motive ediyor."
+            </p>
+          </div>
+          <div class="flex items-center gap-3 pt-4 border-t border-white/10">
+            <div class="w-10 h-10 rounded-full bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center font-bold text-white text-xs">
+              SY
+            </div>
+            <div>
+              <div class="text-xs font-bold text-white">Selin Y.</div>
+              <div class="text-[11px] text-slate-400">Doğrulanmış Kullanıcı • Google Play</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= FAQ SECTION ================= -->
+  <section id="sss" class="py-24 relative z-10">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center max-w-2xl mx-auto mb-16">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-mystic/15 border border-mystic/30 text-purple-300 text-xs font-bold uppercase tracking-wider mb-3">
+          ✦ Merak Edilenler
+        </div>
+        <h2 class="text-3xl sm:text-4xl font-serif font-bold text-white mb-3">
+          Sıkça Sorulan <span class="text-gradient-gold">Sorular</span>
+        </h2>
+      </div>
+
+      <div class="space-y-4">
+        
+        <!-- FAQ 1 -->
+        <details class="glass-box rounded-2xl p-5 group cursor-pointer">
+          <summary class="font-serif font-bold text-sm sm:text-base text-white flex items-center justify-between list-none">
+            <span>Falomi uygulamasını indirmek ücretsiz mi?</span>
+            <span class="text-gold text-xl transition-transform group-open:rotate-45">+</span>
+          </summary>
+          <p class="text-xs sm:text-sm text-slate-300 mt-4 leading-relaxed border-t border-white/10 pt-3">
+            Evet! Falomi uygulamasını Google Play Store üzerinden tamamen ücretsiz olarak indirebilir, günlük ücretsiz fallarınızı ve burç analizlerinizi hemen deneyimleyebilirsiniz.
+          </p>
+        </details>
+
+        <!-- FAQ 2 -->
+        <details class="glass-box rounded-2xl p-5 group cursor-pointer">
+          <summary class="font-serif font-bold text-sm sm:text-base text-white flex items-center justify-between list-none">
+            <span>Yapay zeka kahve falını nasıl yorumluyor?</span>
+            <span class="text-gold text-xl transition-transform group-open:rotate-45">+</span>
+          </summary>
+          <p class="text-xs sm:text-sm text-slate-300 mt-4 leading-relaxed border-t border-white/10 pt-3">
+            Yüklediğiniz kahve fincanı ve tabak fotoğrafları, gelişmiş bilgisayarlı görü ve yapay zeka modelleri tarafından taranır. Telve şekilleri, semboller ve harfler tanınarak isminiz, yaşınız ve burcunuzla harmanlanan özgün bir kehanet metni üretilir.
+          </p>
+        </details>
+
+        <!-- FAQ 3 -->
+        <details class="glass-box rounded-2xl p-5 group cursor-pointer">
+          <summary class="font-serif font-bold text-sm sm:text-base text-white flex items-center justify-between list-none">
+            <span>Hangi Android cihazlarda çalışır?</span>
+            <span class="text-gold text-xl transition-transform group-open:rotate-45">+</span>
+          </summary>
+          <p class="text-xs sm:text-sm text-slate-300 mt-4 leading-relaxed border-t border-white/10 pt-3">
+            Falomi, Android 7.0 ve üzeri işletim sistemine sahip tüm akıllı telefon ve tabletlerde akıcı, hızlı ve sorunsuz bir şekilde çalışacak şekilde optimize edilmiştir.
+          </p>
+        </details>
+
+        <!-- FAQ 4 -->
+        <details class="glass-box rounded-2xl p-5 group cursor-pointer">
+          <summary class="font-serif font-bold text-sm sm:text-base text-white flex items-center justify-between list-none">
+            <span>Fotoğraflarım ve kişisel verilerim güvende mi?</span>
+            <span class="text-gold text-xl transition-transform group-open:rotate-45">+</span>
+          </summary>
+          <p class="text-xs sm:text-sm text-slate-300 mt-4 leading-relaxed border-t border-white/10 pt-3">
+            Kullanıcı gizliliği en temel önceliğimizdir. Yüklediğiniz fotoğraflar sadece fal yorumlaması için işlenir, üçüncü taraflarla kesinlikle paylaşılmaz ve yüksek güvenlikli şifreli sunucularda korunur.
+          </p>
+        </details>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= FINAL HIGH-CONVERSION CTA ================= -->
+  <section class="py-20 relative z-10">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="glass-box p-8 sm:p-14 rounded-[36px] relative overflow-hidden border-2 border-gold/40 text-center shadow-2xl">
+        
+        <!-- Glowing Ambient Circle -->
+        <div class="absolute -top-24 left-1/2 -translate-x-1/2 w-80 h-80 bg-gold/15 rounded-full blur-3xl pointer-events-none"></div>
+
+        <div class="relative z-10 max-w-2xl mx-auto">
+          <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-gold to-golddark text-night flex items-center justify-center mx-auto mb-6 shadow-xl shadow-gold/30">
+            <svg class="w-9 h-9 fill-current" viewBox="0 0 24 24">
+              <path d="M12 2l2.4 6.9L22 9.2l-5.6 4.6L18 22l-6-4.3L6 22l1.6-8.2L2 9.2l7.6-.3z"/>
+            </svg>
+          </div>
+
+          <h2 class="text-3xl sm:text-5xl font-serif font-black tracking-tight mb-4">
+            Kaderinin Kapılarını <br />
+            <span class="text-gradient-gold">Aralamaya Hazır Mısın?</span>
+          </h2>
+          
+          <p class="text-slate-300 text-sm sm:text-base mb-8 leading-relaxed">
+            Falomi ile fincanındaki gizemleri, yıldızların mesajını ve geleceğin sana getirdiklerini hemen öğren. Ücretsiz olarak Google Play'den indir!
+          </p>
+
+          <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <!-- Main CTA Button -->
+            <a href="https://play.google.com/store/apps/details?id=com.mykader.app" target="_blank" rel="noopener noreferrer"
+               class="btn-gold w-full sm:w-auto px-10 py-4 rounded-2xl flex items-center justify-center gap-3.5 group text-base font-black tracking-wide">
+              <svg class="w-7 h-7 fill-current text-night group-hover:scale-110 transition-transform" viewBox="0 0 24 24">
+                <path d="M3.609 1.814L13.792 12 3.61 22.186c-.372-.347-.61-.849-.61-1.428V3.242c0-.579.238-1.081.61-1.428zm11.306 11.31l2.41 2.41-11.9 6.873 9.49-9.283zm0-2.248L5.425 1.593l11.9 6.873-2.41 2.41zm1.531 1.124l3.766-2.176c.725-.42.725-1.107 0-1.527l-3.766-2.176-2.115 2.115 2.115 2.115z" />
+              </svg>
+              <div class="text-left">
+                <div class="text-[10px] uppercase font-bold tracking-widest leading-none text-night/80">Google Play Store</div>
+                <div class="text-lg font-black tracking-tight leading-tight">Şimdi Ücretsiz İndir</div>
+              </div>
+            </a>
+          </div>
+
+          <div class="mt-6 text-xs text-slate-400">
+            Android 7.0+ • Güvenli & Reklamsız Deneyim Seçeneği • Anında Yorum
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="border-t border-white/10 bg-[#05050D] relative z-10 py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col md:flex-row items-center justify-between gap-6 text-center md:text-left">
+        
+        <!-- Brand Info -->
+        <div class="flex items-center gap-3">
+          <div class="w-9 h-9 rounded-lg bg-gold/20 border border-gold/40 flex items-center justify-center text-gold font-serif font-bold text-sm">
+            F
+          </div>
+          <div>
+            <div class="font-serif font-bold text-lg text-white">FALOMİ</div>
+            <div class="text-[11px] text-slate-400">Yapay Zekâ Fal & Astroloji Platformu</div>
+          </div>
+        </div>
+
+        <!-- Links -->
+        <div class="flex flex-wrap items-center justify-center gap-6 text-xs text-slate-400">
+          <a href="#ozellikler" class="hover:text-gold transition-colors">Özellikler</a>
+          <a href="#nasil-calisir" class="hover:text-gold transition-colors">Nasıl Çalışır</a>
+          <a href="#tarot-deneyimi" class="hover:text-gold transition-colors">Tarot Çek</a>
+          <a href="#sss" class="hover:text-gold transition-colors">S.S.S.</a>
+          <a href="https://play.google.com/store/apps/details?id=com.mykader.app" target="_blank" rel="noopener noreferrer" class="text-gold hover:underline">Google Play</a>
+        </div>
+
+        <!-- Copyright -->
+        <div class="text-xs text-slate-500">
+          © 2026 Falomi (mykader). Tüm hakları saklıdır.
+        </div>
+
+      </div>
+    </div>
+  </footer>
+
+  <!-- ================= JAVASCRIPT ================= -->
+  <script>
+    // Tarot interactive flip function
+    function flipTarot(cardElement, title, desc, icon) {
+      const card = cardElement.querySelector('.tarot-card');
+      if (card.classList.contains('is-flipped')) return;
+
+      // Flip the clicked card
+      card.classList.add('is-flipped');
+
+      // Show result box
+      const resultBox = document.getElementById('tarot-result');
+      const tarotTitle = document.getElementById('tarot-title');
+      const tarotDesc = document.getElementById('tarot-desc');
+      const tarotIcon = document.getElementById('tarot-icon');
+
+      tarotIcon.textContent = icon;
+      tarotTitle.textContent = title;
+      tarotDesc.textContent = desc;
+
+      resultBox.classList.remove('hidden');
+      resultBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    // Navbar backdrop blur on scroll
+    window.addEventListener('scroll', () => {
+      const nav = document.getElementById('navbar');
+      if (window.scrollY > 40) {
+        nav.classList.add('shadow-xl', 'bg-night/90');
+      } else {
+        nav.classList.remove('shadow-xl', 'bg-night/90');
+      }
+    });
+  </script>
+
+</body>
+</html>

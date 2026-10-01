@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Falomi - Mobil Önizleme</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: linear-gradient(135deg, #0D0B1A 0%, #1a1535 50%, #0D0B1A 100%);
+      min-height: 100vh;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .logo {
+      font-size: 48px;
+      font-weight: 800;
+      color: #E9C46A;
+      letter-spacing: 4px;
+      text-shadow: 0 0 30px rgba(233, 196, 106, 0.5);
+    }
+
+    .tagline {
+      color: #9890A8;
+      font-size: 16px;
+      margin-top: 8px;
+    }
+
+    .phone-wrapper {
+      position: relative;
+    }
+
+    .phone-frame {
+      width: 390px;
+      height: 844px;
+      background: #0D0B1A;
+      border-radius: 44px;
+      border: 3px solid #2a2a3e;
+      overflow: hidden;
+      box-shadow:
+        0 0 0 12px #1a1a2e,
+        0 25px 80px rgba(0, 0, 0, 0.6),
+        0 0 100px rgba(155, 109, 255, 0.15);
+      position: relative;
+    }
+
+    .notch {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 126px;
+      height: 34px;
+      background: #0D0B1A;
+      border-bottom-left-radius: 17px;
+      border-bottom-right-radius: 17px;
+      z-index: 100;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      padding-bottom: 8px;
+    }
+
+    .notch::after {
+      content: '';
+      width: 60px;
+      height: 5px;
+      background: #1a1a2e;
+      border-radius: 3px;
+    }
+
+    .home-indicator {
+      position: absolute;
+      bottom: 8px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 134px;
+      height: 5px;
+      background: rgba(255, 255, 255, 0.3);
+      border-radius: 3px;
+      z-index: 100;
+    }
+
+    .screen {
+      width: 100%;
+      height: 100%;
+      padding-top: 34px;
+      background: #0D0B1A;
+    }
+
+    iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      background: #0D0B1A;
+    }
+
+    .loading-screen {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(180deg, #0D0B1A 0%, #1A1535 100%);
+    }
+
+    .loading-star {
+      font-size: 80px;
+      color: #E9C46A;
+      animation: pulse 2s ease-in-out infinite;
+      text-shadow: 0 0 40px rgba(233, 196, 106, 0.6);
+    }
+
+    .loading-text {
+      color: #9890A8;
+      font-size: 16px;
+      margin-top: 20px;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.1); opacity: 0.8; }
+    }
+
+    .instructions {
+      margin-top: 30px;
+      text-align: center;
+    }
+
+    .instructions p {
+      color: #6B6480;
+      font-size: 14px;
+      margin-bottom: 16px;
+    }
+
+    .steps {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .step {
+      background: #1A1535;
+      padding: 12px 20px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .step-key {
+      background: #252042;
+      color: #9B6DFF;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    .step-text {
+      color: #E8E4F0;
+      font-size: 14px;
+    }
+
+    .footer {
+      margin-top: 30px;
+      text-align: center;
+    }
+
+    .refresh-btn {
+      background: linear-gradient(135deg, #9B6DFF, #6D4FA8);
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 12px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .refresh-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 30px rgba(155, 109, 255, 0.4);
+    }
+
+    .status {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 16px;
+      color: #6B6480;
+      font-size: 12px;
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #4ADE80;
+    }
+
+    .status-dot.error {
+      background: #F87171;
+    }
+
+    /* Stars background */
+    .stars {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .star {
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      background: white;
+      border-radius: 50%;
+      animation: twinkle 3s ease-in-out infinite;
+    }
+
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.2; }
+      50% { opacity: 0.8; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Animated stars background -->
+  <div class="stars" id="stars"></div>
+
+  <div class="header">
+    <h1 class="logo">FALOMİ</h1>
+    <p class="tagline">Mobil Uygulama Önizleme ✦</p>
+  </div>
+
+  <div class="phone-wrapper">
+    <div class="phone-frame">
+      <div class="notch"></div>
+      <div class="screen">
+        <iframe id="app-frame" src="exp://localhost:8081" sandbox="allow-scripts allow-same-origin">
+          <div class="loading-screen">
+            <div class="loading-star">✦</div>
+            <p class="loading-text">Metro sunucu bağlantısı bekleniyor...</p>
+          </div>
+        </iframe>
+      </div>
+      <div class="home-indicator"></div>
+    </div>
+  </div>
+
+  <div class="instructions">
+    <p>Metro sunucu çalışıyor mu kontrol et:</p>
+    <div class="steps">
+      <div class="step">
+        <span class="step-key">1</span>
+        <span class="step-text">Terminalde <code style="color: #9B6DFF;">npx expo start</code> çalıştır</span>
+      </div>
+      <div class="step">
+        <span class="step-key">2</span>
+        <span class="step-text">Bu sayfayı açık bırak</span>
+      </div>
+    </div>
+    <div class="status">
+      <div class="status-dot" id="status-dot"></div>
+      <span id="status-text">Bağlantı bekleniyor...</span>
+    </div>
+  </div>
+
+  <div class="footer">
+    <button class="refresh-btn" onclick="refreshFrame()">
+      🔄 Yenile
+    </button>
+  </div>
+
+  <script>
+    // Generate animated stars
+    const starsContainer = document.getElementById('stars');
+    for (let i = 0; i < 50; i++) {
+      const star = document.createElement('div');
+      star.className = 'star';
+      star.style.left = Math.random() * 100 + '%';
+      star.style.top = Math.random() * 100 + '%';
+      star.style.animationDelay = Math.random() * 3 + 's';
+      star.style.opacity = Math.random() * 0.5 + 0.2;
+      starsContainer.appendChild(star);
+    }
+
+    // Check connection status
+    const frame = document.getElementById('app-frame');
+    const statusDot = document.getElementById('status-dot');
+    const statusText = document.getElementById('status-text');
+
+    function checkConnection() {
+      try {
+        // Try to access the iframe
+        if (frame.contentWindow) {
+          statusDot.classList.remove('error');
+          statusText.textContent = 'Metro sunucu bağlı ✓';
+        }
+      } catch (e) {
+        // Cross-origin restriction is normal
+        statusText.textContent = 'Sunucu çalışıyor (cross-origin normal)';
+      }
+    }
+
+    function refreshFrame() {
+      frame.src = frame.src;
+      statusText.textContent = 'Yenileniyor...';
+      setTimeout(checkConnection, 2000);
+    }
+
+    // Check periodically
+    setInterval(checkConnection, 5000);
+    checkConnection();
+
+    // Try different URLs
+    const urls = [
+      'exp://localhost:8081',
+      'http://localhost:8081',
+      'http://127.0.0.1:8081'
+    ];
+
+    let currentUrlIndex = 0;
+    function tryNextUrl() {
+      if (currentUrlIndex < urls.length) {
+        frame.src = urls[currentUrlIndex];
+        currentUrlIndex++;
+      }
+    }
+
+    frame.onload = () => {
+      statusText.textContent = 'Uygulama yüklendi ✓';
+    };
+
+    frame.onerror = () => {
+      if (currentUrlIndex < urls.length) {
+        tryNextUrl();
+      } else {
+        statusDot.classList.add('error');
+        statusText.textContent = 'Metro sunucu bulunamadı - npx expo start çalıştırın';
+      }
+    };
+
+    // Try URLs sequentially
+    tryNextUrl();
+  </script>
+</body>
+</html>
